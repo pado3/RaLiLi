@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radiko LIVE Linker</title>
+</head>
+
+<body>
+Radikoアプリで現在放送中の番組を開きます。<br />
+聴きたい放送局をリストから選んで「リンク」を押して下さい。<br />
+<p>
+<form id="selsta">
+<select name="staid">
+<option value='TBS'>TBSラジオ</option>
+<option value='ABC'>ABCラジオ</option>
+<option value='E-RADIO'>e-radio LAKESIDE FM77.0</option>
+<option value='CROSSFM'>CROSS FM</option>
+</select>
+</p>
+<p>
+<input type="button" value="リンク" onclick="link_radiko()">
+</p>
+</form>
+<hr>
+<p>
+ボタンでリンクできなかったときは、下記をクリックして下さい：
+</p>
+<a id="direct_link" href="" target="_blank" rel="noopener">（JavaScriptが動けばURLが出ます）</a>
+<hr>
+聴きたい放送局がリストに無ければエディタで追加できます。放送局のIDは、下記ページ末尾「放送局一覧」のURLから拾えます：<br />
+<a href="https://news.radiko.jp/" target="_blank" rel="noopener">radiko news(ラジコニュース)</a>
+<p>
+改造はご自由に。
+<footer>
+<small>Copyright &copy;2021 @pado3, All Rights Reserved.</small>
+</body>
+</html>
+
+<!-- Java Script Start -->
+<script type="text/javascript">
+// Link to Radiko
+function link_radiko() {
+	console.log("link_radiko");
+	const nowdt = new Date();
+	var yyyy = nowdt.getFullYear();
+	var mm   = nowdt.getMonth()+1;
+		if(mm < 10) { mm = "0" + mm; }
+	var dd   = nowdt.getDate();
+		if(dd < 10) { dd = "0" + dd; }
+	var HH   = nowdt.getHours();
+		if(HH < 10) { HH = "0" + HH; }
+	var MM   = nowdt.getMinutes();
+		if(MM < 10) { MM = "0" + MM; }
+	var SS   = nowdt.getSeconds();
+		if(SS < 10) { SS = "0" + SS; }
+	var linktime = yyyy + mm + dd + HH + MM + SS;
+	var applink = 
+		'http://radiko.jp/share/?sid=' + selsta.staid.value + '&t=' + linktime;
+	var elem = document.getElementById("direct_link");
+	elem.textContent = applink;
+	elem.href = applink;
+	console.log(applink);
+	window.open(applink);
+};
+
+</script>
